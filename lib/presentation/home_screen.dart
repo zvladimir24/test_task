@@ -12,9 +12,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Random _random = Random();
-  int _r = 0;
-  int _g = 0;
-  int _b = 0;
+  static const int maxColorValue = 256;
+  static const double contrastThreshol = 0.5;
+
   Color _backgroundColor = Colors.white;
   Color _textColor = Colors.black;
 
@@ -28,16 +28,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   ///Function to generate random values for rgb when generating new color
   Color _generateRandomColor() {
-    _r = _random.nextInt(256);
-    _g = _random.nextInt(256);
-    _b = _random.nextInt(256);
+    final r = _random.nextInt(256);
+    final g = _random.nextInt(256);
+    final b = _random.nextInt(256);
 
-    return Color.fromARGB(255, _r, _g, _b);
+    return Color.fromARGB(maxColorValue, r, g, b);
   }
 
   ///Function to generate text color based on brightness of the background color
   Color _getContrastColor(Color color) {
-    return color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+    return color.computeLuminance() > contrastThreshol
+        ? Colors.black
+        : Colors.white;
   }
 
   @override
